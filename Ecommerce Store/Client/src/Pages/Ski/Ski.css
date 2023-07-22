@@ -1,0 +1,15 @@
+.skiContainer {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px; /* Set the width of the sidebar as per your requirements */
+}
+
+.skiMainGridContainer {
+  flex: 1; /* The main grid container will take the remaining available space */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  padding: 20px;
+}

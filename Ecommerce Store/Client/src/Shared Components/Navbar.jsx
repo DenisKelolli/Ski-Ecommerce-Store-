@@ -6,7 +6,9 @@ const NavigationBar = () => {
   return (
     <nav>
       <div className="logo">
-        <img src="logo.png" alt="Logo" />
+      <Link to="/">
+          <img src="logo.png" alt="Logo" />
+      </Link>
       </div>
       <div className="menu">
         <ul>
