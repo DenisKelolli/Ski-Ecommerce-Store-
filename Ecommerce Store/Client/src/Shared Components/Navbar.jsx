@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { CartContext } from '../context/cartContext'; 
 
 const NavigationBar = () => {
+  const { cartCount } = useContext(CartContext); 
+
   return (
     <nav>
       <div className="logo">
-      <Link to="/">
+        <Link to="/">
           <img src="logo.png" alt="Logo" />
-      </Link>
+        </Link>
       </div>
       <div className="menu">
         <ul>
@@ -26,7 +29,11 @@ const NavigationBar = () => {
         <ul>
           <li><Link to="/signin">Sign In</Link></li>
           <li><Link to="/register">Register</Link></li>
-          <li><Link to="/cart">Cart</Link></li>
+          <li>
+            <Link to="/cart">
+              Cart ({cartCount})
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

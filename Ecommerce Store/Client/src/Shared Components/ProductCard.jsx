@@ -1,23 +1,22 @@
 import React from 'react';
-import "./ProductCard.css"
+import './ProductCard.css';
 
+const ProductCard = ({ id, image, title, price, onAddToCart }) => {
+  const handleAddToCart = () => {
+    // Call the onAddToCart function passed as a prop
+    onAddToCart();
+  };
 
-
-
-const ProductCard = ({id,image,title,price}) => {
-  
   return (
-    <div>
-      <div key={id} className="product-card-container">
-        <img src={image} alt="image" className='productImage'  />
-        <div className="productTitle">{title}</div>
-        <div className="productPrice">Price: ${price}</div>
-        <div className="addToCartAndBuyNowButtonContainer">
-          <button className="addToCartButton">Add To Cart</button>
-          <button className="buyNowButton">Buy Now</button>
-        </div>
+    <div className="product-card-container">
+      <img src={image} alt={title} className="productImage" />
+      <div className="productTitle">{title}</div>
+      <div className="productPrice">{price}</div>
+      <div className='productButtonsContainer'>
+        <button onClick={handleAddToCart} className="addToCartButton"> Add to Cart</button>
+        <button className="buyNowButton">Buy Now </button>
       </div>
-   </div>
+    </div>
   );
 };
 

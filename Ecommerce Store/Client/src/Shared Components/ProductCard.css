@@ -1,13 +1,13 @@
 .product-card-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* Center items both horizontally and vertically */
+  align-items: center; 
   flex-direction: column;
   width: 500px;
 }
 
 .productImage {
-  max-width: 400px; /* Set the image to have a maximum width of 100% */
+  max-width: 400px; 
   height: auto;
 }
 
@@ -24,7 +24,7 @@
 
 .productButtonsContainer {
   display: flex;
-  gap: 10px; /* Adjust the gap value as desired */
+  gap: 10px; 
 }
 
 .addToCartButton,
