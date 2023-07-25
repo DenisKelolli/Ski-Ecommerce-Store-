@@ -3,15 +3,15 @@ import './ProductCard.css';
 
 const ProductCard = ({ id, image, title, price, onAddToCart }) => {
   const handleAddToCart = () => {
-    // Call the onAddToCart function passed as a prop
-    onAddToCart();
+    // Call the onAddToCart function passed as a prop and pass the relevant data
+    onAddToCart({ id, image, title, price });
   };
 
   return (
     <div className="product-card-container">
       <img src={image} alt={title} className="productImage" />
       <div className="productTitle">{title}</div>
-      <div className="productPrice">{price}</div>
+      <div className="productPrice">${price}</div>
       <div className='productButtonsContainer'>
         <button onClick={handleAddToCart} className="addToCartButton"> Add to Cart</button>
         <button className="buyNowButton">Buy Now </button>

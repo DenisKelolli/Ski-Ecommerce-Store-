@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from '../../Shared Components/Sidebar';
-import './Ski.css';
+import './Snowboard.css';
 import ProductCard from '../../Shared Components/ProductCard';
 import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
 
-const Ski = () => {
+const Snowboard = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSort, setSelectedSort] = useState('');
   const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   useEffect(() => {
-    const fetchSkis = async () => {
+    const fetchSnowboard = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/ski');
+        const response = await axios.get('http://localhost:3000/snowboard');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching ski data:', error);
       }
     };
-    fetchSkis();
+    fetchSnowboard();
   }, []);
 
   // Callback function to receive the selected category from Sidebar
@@ -41,8 +41,6 @@ const Ski = () => {
   // Function to add the selected product to the cart
   const addToCart = async (productData) => {
     try {
-      
-      productData.quantity = 1;
       // Make a POST request to your /cart endpoint with the product data
       await axios.post('http://localhost:3000/cart', productData);
       // Now you can call the handleAddToCart function to update your local cart state
@@ -87,4 +85,4 @@ const Ski = () => {
   );
 };
 
-export default Ski;
+export default Snowboard;
