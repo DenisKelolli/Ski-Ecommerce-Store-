@@ -8,6 +8,7 @@ require("dotenv").config();
 const port = 3000;
 const ProductModel = require("./models/product");
 const CartModel = require("./models/cart");
+const CheckoutModel = require("./models/checkout")
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../Client/public')));
@@ -88,6 +89,33 @@ app.get("/snowboard", (req, res) => {
     .then((skis) => res.json(skis))
     .catch((error) => res.status(500).json({ error: "Error fetching ski data" }));
 });
+
+
+app.get("/checkout", async (req, res) => {
+  try {
+    // Fetch the checkout items from the MongoDB database
+    const checkoutItems = await CheckoutModel.find();
+
+    res.status(200).json(checkoutItems);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching checkout items", message: error.message });
+  }
+});
+
+
+app.post("/checkout", async (req, res) => {
+  const { products } = req.body;
+
+  try {
+    // Save the cart items as checkout objects in the MongoDB database
+    const checkoutItems = await CheckoutModel.create(products);
+
+    res.status(201).json({ message: "Checkout successful", checkoutItems });
+  } catch (error) {
+    res.status(500).json({ error: "Error during checkout", message: error.message });
+  }
+});
+
 
 const start = async () => {
   try {

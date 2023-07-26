@@ -7,6 +7,7 @@ import Snowboard from './Pages/Snowboard/Snowboard';
 import Cart from './Pages/Cart/Cart';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartContextProvider } from './context/cartContext'; // Import the CartContextProvider
+import Checkout from './Pages/Checkout/Checkout';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/ski" element={<Ski />} />
           <Route exact path="/snowboard" element={<Snowboard />} />
           <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/checkout" element={<Checkout />} />
         </Routes>
       </Router>
     </CartContextProvider>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Cart.css';
 
 const Product = ({ product, updateQuantity, deleteProduct }) => {
@@ -66,7 +67,6 @@ const Product = ({ product, updateQuantity, deleteProduct }) => {
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [showCart, setShowCart] = useState(false); // Add showCart state
 
   useEffect(() => {
@@ -78,7 +78,6 @@ const Cart = () => {
         setShowCart(true); // Set showCart to true after the data is fetched
       } catch (error) {
         console.error('Error fetching cart items:', error);
-        setLoading(false);
         setShowCart(true); // Set showCart to true on error as well
       }
     };
@@ -110,9 +109,29 @@ const Cart = () => {
       });
   };
 
-  if (loading) {
-    return null;
+
+  const sendCartItemsToCheckout = async () => {
+  try {
+    // Get all the cart items from the products state
+    const cartItems = products.map((product) => ({
+      title: product.title,
+      image: product.image,
+      price: product.price,
+      quantity: product.quantity,
+    }));
+
+    // Send a POST request to the server's /checkout endpoint with the cart items
+    const response = await axios.post("http://localhost:3000/checkout", { products: cartItems });
+
+    // Optionally, you can handle the response from the server if needed
+    console.log("Checkout successful:", response.data);
+
+    // Clear the cart on successful checkout
+    setProducts([]);
+  } catch (error) {
+    console.error("Error during checkout:", error);
   }
+};
 
   return (
     <>
@@ -130,6 +149,13 @@ const Cart = () => {
           ))
         )
       ) : null}
+      
+      
+      {products.length > 0 && (
+        <Link to="/checkout">
+          <button onClick={sendCartItemsToCheckout} className="checkoutButton">Checkout</button>
+        </Link>
+      )}
     </>
   );
 };

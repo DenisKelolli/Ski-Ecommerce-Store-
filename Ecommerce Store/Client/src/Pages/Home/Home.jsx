@@ -1,5 +1,5 @@
 import React from "react";
-import Carousel from "./Carousel";
+import Hero from "./Hero";
 import HomeCard from "./HomeCard"
 import Skis from "../../assets/Skis.png"
 import Snowboard from "../../assets/Snowboard.png"
@@ -28,7 +28,7 @@ const Home = () =>{
 
     return(
         <>
-            <Carousel />
+            <Hero />
             <h1 style={{ textAlign: 'center' }}>Products</h1>
 
             <div className="grid-container">

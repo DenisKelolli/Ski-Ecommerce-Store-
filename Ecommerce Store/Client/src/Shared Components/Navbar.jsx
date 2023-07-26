@@ -1,16 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { CartContext } from '../context/cartContext'; 
+import {FaSkiing} from "react-icons/fa"
+import axios from 'axios';
 
 const NavigationBar = () => {
-  const { cartCount } = useContext(CartContext); 
+  const { cartCount, setCartCount } = useContext(CartContext);
+  const [cartData, setCartData] = useState([]);
+
+    useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/cart');
+        setCartData(response.data);
+        
+        // Calculate the total number of items in the cart and update the cartCount state
+        const totalItems = response.data.reduce((total, item) => total + item.quantity, 0);
+        setCartCount(totalItems);
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+      }
+    };
+    fetchCartData();
+  }, []);
 
   return (
     <nav>
       <div className="logo">
         <Link to="/">
-          <img src="logo.png" alt="Logo" />
+          <div className="icon"><FaSkiing size={30}/></div>
         </Link>
       </div>
       <div className="menu">
