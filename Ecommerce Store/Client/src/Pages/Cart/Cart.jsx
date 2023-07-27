@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Cart.css';
 
+
 const Product = ({ product, updateQuantity, deleteProduct }) => {
   const [quantity, setQuantity] = useState(product.quantity);
 
@@ -137,7 +138,7 @@ const Cart = () => {
     <>
       {showCart ? (
         products.length === 0 ? (
-          <div className='noItemsInCartMessage'>You don't have any items in your cart.</div>
+          <div className='noItemsInCartMessage'>Your cart is empty.</div>
         ) : (
           products.map((product) => (
             <Product

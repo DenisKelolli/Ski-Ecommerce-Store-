@@ -1,22 +1,31 @@
 .sidebar-container {
     width: 200px;
-    background-color:lightskyblue;
+    height: 330px;
+    background-color:#333;
     padding: 1rem;
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-right: 20px;
+    border-radius: 5px;
   }
   
   .sidebar-options {
-    margin-top: 1rem;
+    margin-top: 20px;
+    margin-left: 10px;
   }
   
   h2 {
-    margin-bottom: 0.5rem;
+    margin-left: 5px;
+   
     font-size: 24px;
+    color: white;
   }
   
   label {
     display: block;
     margin-bottom: 0.5rem;
     font-size: 20px;
+    color:white;
   }
   
   input[type='radio'] {

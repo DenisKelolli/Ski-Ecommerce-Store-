@@ -4,55 +4,48 @@ import './Ski.css';
 import ProductCard from '../../Shared Components/ProductCard';
 import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
+import { useParams } from 'react-router-dom';
 
 const Ski = () => {
+  const { category } = useParams(); // Get the category from the URL
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSort, setSelectedSort] = useState('');
   const [isFilterApplied, setIsFilterApplied] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    const fetchSkis = async () => {
+    const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/ski');
+        const response = await axios.get(`http://localhost:3000/${category}`);
         setProducts(response.data);
       } catch (error) {
-        console.error('Error fetching ski data:', error);
+        console.error(`Error fetching ${category} data:`, error);
       }
     };
-    fetchSkis();
-  }, []);
+    fetchProducts();
+  }, [category]);
 
-  // Callback function to receive the selected category from Sidebar
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
     setIsFilterApplied(true);
   };
 
-  // Callback function to receive the selected sorting option from Sidebar
   const handleSortSelect = (sortOption) => {
     setSelectedSort(sortOption);
   };
 
-  // Use the useContext hook to access the CartContext
   const { handleAddToCart } = useContext(CartContext);
 
-  
-  // Function to add the selected product to the cart
   const addToCart = async (productData) => {
     try {
-      
       productData.quantity = 1;
-      // Make a POST request to your /cart endpoint with the product data
       await axios.post('http://localhost:3000/cart', productData);
-      // Now you can call the handleAddToCart function to update your local cart state
       handleAddToCart(productData);
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
   };
 
-  // Filter and sort products based on the selected category and sorting option
   let filteredProducts = isFilterApplied && selectedCategory !== 'all'
     ? products.filter(product => product['sidebar-category'] === selectedCategory)
     : products;
@@ -65,9 +58,7 @@ const Ski = () => {
 
   return (
     <div className="skiContainer">
-      {/* Pass the callback functions to the Sidebar */}
       <Sidebar onCategorySelect={handleCategorySelect} onSortSelect={handleSortSelect} />
-
       <div className="skiMainGridContainer">
         {filteredProducts.map((product) => {
           const imageUrl = `http://localhost:3000${product.image}`;
@@ -78,7 +69,7 @@ const Ski = () => {
               image={imageUrl}
               title={product.title}
               price={product.price}
-              onAddToCart={addToCart} // Use the addToCart function as the callback prop
+              onAddToCart={addToCart}
             />
           );
         })}

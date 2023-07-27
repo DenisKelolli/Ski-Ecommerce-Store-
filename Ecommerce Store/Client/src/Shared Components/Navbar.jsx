@@ -39,7 +39,7 @@ const NavigationBar = () => {
           <li><Link to="/jackets">Jackets</Link></li>
           <li><Link to="/pants">Pants</Link></li>
           <li><Link to="/boots">Boots</Link></li>
-          <li><Link to="/helmet">Helmet</Link></li>
+          <li><Link to="/helmets">Helmets</Link></li>
           <li><Link to="/goggles">Goggles</Link></li>
           <li><Link to="/gloves">Gloves</Link></li>
         </ul>

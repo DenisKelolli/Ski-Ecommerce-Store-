@@ -18,11 +18,6 @@ app.get("/", (req, res) => {
   res.send("This is the Homepage!");
 });
 
-app.get("/ski", (req, res) => {
-  ProductModel.find({ category: "ski" })
-    .then((skis) => res.json(skis))
-    .catch((error) => res.status(500).json({ error: "Error fetching ski data" }));
-});
 
 app.get("/cart", (req, res) => {
   CartModel.find()
@@ -84,12 +79,6 @@ app.delete("/cart", (req, res) => {
     .catch((error) => res.status(500).json({ error: "Error deleting product from cart" }));
 });
 
-app.get("/snowboard", (req, res) => {
-  ProductModel.find({ category: "snowboard" })
-    .then((skis) => res.json(skis))
-    .catch((error) => res.status(500).json({ error: "Error fetching ski data" }));
-});
-
 
 app.get("/checkout", async (req, res) => {
   try {
@@ -115,6 +104,15 @@ app.post("/checkout", async (req, res) => {
     res.status(500).json({ error: "Error during checkout", message: error.message });
   }
 });
+
+//Dynamically route based on category defined in MongoDb productmodels collection. 
+app.get("/:category", (req, res) => {
+  const category = req.params.category;
+  ProductModel.find({ category })
+    .then((products) => res.json(products))
+    .catch((error) => res.status(500).json({ error: `Error fetching ${category} data` }));
+});
+
 
 
 const start = async () => {

@@ -9,10 +9,6 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a small shadow to the nav */
 }
 
-.logo img {
-  width: 100px;
-  height: auto;
-}
 
 .menu ul {
   list-style-type: none;
@@ -55,5 +51,6 @@ li {
 
 .icon{
   color: white;
-  padding-left: 10px;
+  padding-left: 12px;
+  padding-top: 8px;
 }
