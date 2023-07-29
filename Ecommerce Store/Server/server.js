@@ -81,29 +81,12 @@ app.delete("/cart", (req, res) => {
 
 
 app.get("/checkout", async (req, res) => {
-  try {
-    // Fetch the checkout items from the MongoDB database
-    const checkoutItems = await CheckoutModel.find();
-
-    res.status(200).json(checkoutItems);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching checkout items", message: error.message });
-  }
+  CartModel.find()
+    .then((cartItems) => res.json(cartItems))
+    .catch((error) => res.status(500).json({ error: "Error fetching cart items" }));
 });
 
 
-app.post("/checkout", async (req, res) => {
-  const { products } = req.body;
-
-  try {
-    // Save the cart items as checkout objects in the MongoDB database
-    const checkoutItems = await CheckoutModel.create(products);
-
-    res.status(201).json({ message: "Checkout successful", checkoutItems });
-  } catch (error) {
-    res.status(500).json({ error: "Error during checkout", message: error.message });
-  }
-});
 
 //Dynamically route based on category defined in MongoDb productmodels collection. 
 app.get("/:category", (req, res) => {

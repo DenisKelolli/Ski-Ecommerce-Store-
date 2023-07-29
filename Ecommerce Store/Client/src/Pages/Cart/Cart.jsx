@@ -17,6 +17,7 @@ const Product = ({ product, updateQuantity, deleteProduct }) => {
       .then((response) => {
         // Update the product's quantity in the client-side state with the value from the server response
         updateQuantity(product, response.data.quantity);
+
       })
       .catch((error) => {
         console.error('Error updating quantity:', error);
@@ -59,7 +60,7 @@ const Product = ({ product, updateQuantity, deleteProduct }) => {
       <button onClick={increment} className="decrementButton">
         +
       </button>
-      <button onClick={handleDelete} className="deleteButton">
+      <button onClick={handleDelete} className="cartDeleteButton">
         Remove
       </button>
     </div>
@@ -154,9 +155,13 @@ const Cart = () => {
       
       {products.length > 0 && (
         <Link to="/checkout">
-          <button onClick={sendCartItemsToCheckout} className="checkoutButton">Checkout</button>
+          <button onClick={sendCartItemsToCheckout} className="checkoutButton">Checkout Now</button>
         </Link>
       )}
+        <Link to="/">
+          <button className="cartContinueShoppingButton">Continue Shopping</button>
+        </Link>
+
     </>
   );
 };

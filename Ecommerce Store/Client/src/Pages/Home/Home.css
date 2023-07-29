@@ -1,0 +1,14 @@
+
+.grid-center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: 30px;
+    width: 100vw;
+    margin: 0 5vw; /* Adjusts the amount of white space on the left and right of the screen */
+  }
