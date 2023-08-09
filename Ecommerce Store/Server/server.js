@@ -250,7 +250,20 @@ app.post("/signin", (req, res, next) => {
   res.status(200).json({ message: "Login successful" });
 });
 
-
+// Logout endpoint
+app.post("/logout", (req, res) => {
+  req.logout(() => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        res.status(500).json({ message: "Logout failed" });
+      } else {
+        res.clearCookie("connect.sid"); // Clear the connect.sid cookie
+        res.status(200).end(); // Responding with status 200 without JSON message
+      }
+    });
+  });
+});
 
 const start = async () => {
   try {
