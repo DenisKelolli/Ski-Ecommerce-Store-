@@ -52,3 +52,29 @@
   align-items: flex-end; 
   margin-bottom: 50px;
 }
+
+/* Add the following media query to adjust the font size for titles on smaller screens */
+@media (max-width: 426px) {
+  .product-card-container {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  .productImage {
+    max-width: 300px; /* Reduce the image width on smaller screens */
+    margin-top: 20px;
+  }
+
+  .productTitle {
+    font-size: 24px; /* Set a smaller font size for titles on smaller screens */
+  }
+
+  .productPrice {
+    font-size: 22px; /* Set a smaller font size for prices on smaller screens */
+  }
+
+  /* Optionally, you can also adjust the button font size for better proportion */
+  .addToCartButton,
+  .buyNowButton {
+    font-size: 16px;
+  }
+}

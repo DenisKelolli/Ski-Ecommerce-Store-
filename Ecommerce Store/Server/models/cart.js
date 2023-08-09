@@ -5,7 +5,6 @@ const cartSchema = new mongoose.Schema({
     title: String,
     price: Number,
     quantity: Number,
-    totalPrice: Number
 })
 
 module.exports = mongoose.model("CartModel", cartSchema);

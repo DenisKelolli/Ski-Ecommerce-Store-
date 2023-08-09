@@ -21,7 +21,6 @@ const Footer = () => {
                 <div className="footer__social-links"><FaInstagramSquare color="white"  size = "30px" /></div>
                 <div className="footer__social-links"><FaTwitterSquare color="white"  size = "30px" /></div>
               </div>
-             
             </div>
             <div className="footer__section">
             </div>

@@ -1,4 +1,4 @@
-/* Checkout.css */
+
 .checkoutContainer {
     max-width: 600px;
     margin: 0 auto;
@@ -64,3 +64,29 @@
     color: #428bca;
   }
   
+ .whiteSpaceDiv{
+  margin-bottom: 490px;
+ }
+
+ .completeOrderButton{
+  background-color: rgb(24, 181, 24);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+ }
+
+ .completeOrderButton:hover {
+  background-color: green;
+}
+
+.checkout-title{
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
