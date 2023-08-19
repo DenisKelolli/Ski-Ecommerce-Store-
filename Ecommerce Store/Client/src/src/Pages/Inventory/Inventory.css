@@ -1,0 +1,26 @@
+.skiContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to a new line on small screens */
+  justify-content: center; /* Center the items horizontally */
+}
+
+.skiMainGridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Display 3 columns */
+  gap: 20px; /* Adjust the gap between product cards */
+  margin-top: 20px;
+}
+
+/* Adjust the number of columns for smaller screens */
+@media (max-width: 1024px) {
+  .skiMainGridContainer {
+    grid-template-columns: repeat(2, 1fr); /* Display 2 columns on smaller screens */
+  }
+}
+
+/* Adjust the number of columns for even smaller screens */
+@media (max-width: 768px) {
+  .skiMainGridContainer {
+    grid-template-columns: repeat(1, 1fr); /* Display 1 column on even smaller screens */
+  }
+}
