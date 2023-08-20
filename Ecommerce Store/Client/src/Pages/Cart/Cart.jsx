@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import './Cart.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "./Cart.css";
 
 const Product = ({ product, updateQuantity, deleteProduct }) => {
   const [quantity, setQuantity] = useState(product.quantity);
@@ -26,13 +26,23 @@ const Product = ({ product, updateQuantity, deleteProduct }) => {
 
   return (
     <div className="cartContainer" key={product._id}>
-      <img className="cartProductImage" src={product.image} alt={product.title} />
+      <img
+        className="cartProductImage"
+        src={product.image}
+        alt={product.title}
+      />
       <div className="cartProductTitle">{product.title}</div>
       <div className="cartProductPrice">${product.price}</div>
-      <button onClick={decrement} className="incrementButton">-</button>
+      <button onClick={decrement} className="incrementButton">
+        -
+      </button>
       <div className="quantityField">QTY: {quantity}</div>
-      <button onClick={increment} className="decrementButton">+</button>
-      <button onClick={handleDelete} className="cartDeleteButton">Remove</button>
+      <button onClick={increment} className="decrementButton">
+        +
+      </button>
+      <button onClick={handleDelete} className="cartDeleteButton">
+        Remove
+      </button>
     </div>
   );
 };
@@ -44,11 +54,13 @@ const Cart = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/cart', { withCredentials: true });
-        setProducts(response.data); 
+        const response = await axios.get(`${import.meta.env.VITE_API}/cart`, {
+          withCredentials: true,
+        });
+        setProducts(response.data);
         setShowCart(true);
       } catch (error) {
-        console.error('Error fetching cart items:', error);
+        console.error("Error fetching cart items:", error);
         setShowCart(true);
       }
     };
@@ -57,33 +69,38 @@ const Cart = () => {
 
   const updateQuantity = async (productId, newQuantity) => {
     try {
-      await axios.put(`http://localhost:3000/cart/${productId}`, { quantity: newQuantity }, { withCredentials: true });
+      await axios.put(
+        `${import.meta.env.VITE_API}/cart/${productId}`,
+        { quantity: newQuantity },
+        { withCredentials: true }
+      );
       setProducts((prevProducts) =>
         prevProducts.map((p) =>
           p._id === productId ? { ...p, quantity: newQuantity } : p
         )
       );
     } catch (error) {
-      console.error('Error updating quantity:', error);
+      console.error("Error updating quantity:", error);
     }
   };
 
   const deleteProduct = async (productId) => {
     try {
-      await axios.delete(`http://localhost:3000/cart/${productId}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API}/cart/${productId}`, {
+        withCredentials: true,
+      });
       window.location.reload();
     } catch (error) {
-      console.error('Error deleting product:', error);
+      console.error("Error deleting product:", error);
     }
   };
 
- 
   return (
     <>
       <div className="cart-title">Cart</div>
       {showCart ? (
         products.length === 0 ? (
-          <div className='noItemsInCartMessage'>Your cart is empty.</div>
+          <div className="noItemsInCartMessage">Your cart is empty.</div>
         ) : (
           products.map((product) => (
             <Product
@@ -102,7 +119,9 @@ const Cart = () => {
         </Link>
       )}
       <Link to="/">
-        <button className="cartContinueShoppingButton">Continue Shopping</button>
+        <button className="cartContinueShoppingButton">
+          Continue Shopping
+        </button>
       </Link>
     </>
   );

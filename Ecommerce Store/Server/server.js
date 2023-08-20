@@ -7,45 +7,48 @@ const passportLocal = require("passport-local").Strategy;
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const path = require('path');
-const bodyParser = require('body-parser');
+const path = require("path");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 const port = 3000;
 const ProductModel = require("./models/product");
 const CartModel = require("./models/cart");
 const UserModel = require("./models/user");
-const MongoStore = require('connect-mongo');
+const MongoStore = require("connect-mongo");
 
 // Session middleware configuration
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECTION_STRING })
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECTION_STRING }),
+  })
+);
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 //Middleware
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
-app.get('/getuser', (req, res) => {
-
+app.get("/getuser", (req, res) => {
   if (req.isAuthenticated() && req.user) {
     const username = req.user.username; // Grab the authenticated user's username
     res.json({ username });
   } else {
-    console.log('User is not authenticated.'); // Debugging log
-    res.status(401).json({ error: 'User is not authenticated' });
+    console.log("User is not authenticated."); // Debugging log
+    res.status(401).json({ error: "User is not authenticated" });
   }
 });
 
-app.use(express.static(path.join(__dirname, '../Client/public')));
+app.use(express.static(path.join(__dirname, "../Client/public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -55,40 +58,41 @@ function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(401).json({ message: 'Unauthorized' });
+  res.status(401).json({ message: "Unauthorized" });
 }
 
 // Passport strategy configuration
-passport.use(new passportLocal(async (username, password, done) => {
-  console.log('Trying to authenticate:', username); // Debugging log
+passport.use(
+  new passportLocal(async (username, password, done) => {
+    console.log("Trying to authenticate:", username); // Debugging log
 
-  try {
-    const user = await UserModel.findOne({ username: username });
+    try {
+      const user = await UserModel.findOne({ username: username });
 
-    if (!user) {
-      console.log('User not found:', username); // Debugging log
-      return done(null, false);
+      if (!user) {
+        console.log("User not found:", username); // Debugging log
+        return done(null, false);
+      }
+
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) throw err;
+
+        console.log("Password comparison result:", result); // Debugging log
+
+        if (result) return done(null, user);
+        else return done(null, false);
+      });
+    } catch (err) {
+      return done(err);
     }
-
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (err) throw err;
-
-      console.log('Password comparison result:', result); // Debugging log
-
-      if (result) return done(null, user);
-      else return done(null, false);
-    });
-  } catch (err) {
-    return done(err);
-  }
-}));
+  })
+);
 
 // Serialization and deserialization for the user
 passport.serializeUser((user, cb) => {
   cb(null, user.id);
 });
 passport.deserializeUser(async (id, done) => {
-
   try {
     const user = await UserModel.findOne({ _id: id });
     done(null, user);
@@ -97,11 +101,10 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
 app.get("/cart", isAuthenticated, async (req, res) => {
   try {
     // Find the user in the UserModel and populate the cart items
-    const user = await UserModel.findById(req.user._id).populate('cart');
+    const user = await UserModel.findById(req.user._id).populate("cart");
     res.json(user.cart);
   } catch (error) {
     res.status(500).json({ error: "Error fetching cart items" });
@@ -114,9 +117,9 @@ app.post("/cart", isAuthenticated, async (req, res) => {
 
   try {
     // Find the user in the UserModel
-    const user = await UserModel.findById(userId).populate('cart');
+    const user = await UserModel.findById(userId).populate("cart");
 
-    let cartItem = user.cart.find(item => item.title === title);
+    let cartItem = user.cart.find((item) => item.title === title);
 
     if (cartItem) {
       // If the item exists, update its quantity
@@ -155,7 +158,10 @@ app.put("/cart/:id", isAuthenticated, async (req, res) => {
       // If the item exists, update its quantity
       cartItem.quantity = quantity;
       await user.save();
-      res.json({ message: "Item quantity updated successfully", quantity: cartItem.quantity });
+      res.json({
+        message: "Item quantity updated successfully",
+        quantity: cartItem.quantity,
+      });
     } else {
       res.status(404).json({ error: "Cart item not found" });
     }
@@ -171,7 +177,9 @@ app.delete("/cart/:id", isAuthenticated, async (req, res) => {
     // Find the user in the UserModel
     const user = await UserModel.findById(req.user._id);
 
-    const productIndex = user.cart.findIndex(item => item._id.toString() === productId);
+    const productIndex = user.cart.findIndex(
+      (item) => item._id.toString() === productId
+    );
 
     if (productIndex !== -1) {
       user.cart.splice(productIndex, 1);
@@ -182,10 +190,9 @@ app.delete("/cart/:id", isAuthenticated, async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Error deleting product from cart" });
-    console.error('Error deleting product:', error); // Log the error for debugging
+    console.error("Error deleting product:", error); // Log the error for debugging
   }
 });
-
 
 app.get("/checkout", isAuthenticated, async (req, res) => {
   try {
@@ -209,22 +216,24 @@ app.delete("/checkout", isAuthenticated, async (req, res) => {
   }
 });
 
-//Dynamically route based on category defined in MongoDb productmodels collection. 
+//Dynamically route based on category defined in MongoDb productmodels collection.
 app.get("/:category", (req, res) => {
   const category = req.params.category;
   ProductModel.find({ category })
     .then((products) => res.json(products))
-    .catch((error) => res.status(500).json({ error: `Error fetching ${category} data` }));
+    .catch((error) =>
+      res.status(500).json({ error: `Error fetching ${category} data` })
+    );
 });
 
-app.post('/register', async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
 
     // Check if the username is already taken
     const existingUser = await UserModel.findOne({ username });
     if (existingUser) {
-      return res.status(409).json({ error: 'Username already taken' });
+      return res.status(409).json({ error: "Username already taken" });
     }
 
     // Hash the password using bcrypt
@@ -236,19 +245,25 @@ app.post('/register', async (req, res) => {
     // Save the user document to the database
     await newUser.save();
 
-    res.status(201).json({ message: 'Registration successful' });
+    res.status(201).json({ message: "Registration successful" });
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong, please try again later.' });
+    res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later." });
   }
 });
 
 // User Login Endpoint
-app.post("/signin", (req, res, next) => {
-  console.log('Login request received:', req.body); // Debugging log
-  passport.authenticate("local")(req, res, next);
-}, (req, res) => {
-  res.status(200).json({ message: "Login successful" });
-});
+app.post(
+  "/signin",
+  (req, res, next) => {
+    console.log("Login request received:", req.body); // Debugging log
+    passport.authenticate("local")(req, res, next);
+  },
+  (req, res) => {
+    res.status(200).json({ message: "Login successful" });
+  }
+);
 
 // Logout endpoint
 app.post("/logout", (req, res) => {
@@ -275,5 +290,11 @@ const start = async () => {
     console.log(e.message);
   }
 };
+
+app.use("/", express.static(path.join(__dirname, "../Client/dist")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../Client/dist", "index.html"));
+});
 
 start();

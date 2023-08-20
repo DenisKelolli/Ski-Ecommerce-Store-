@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
-import "./SignIn.css"
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./SignIn.css";
 
 function SignIn() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
@@ -18,15 +18,20 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/signin', { username, password }, { withCredentials: true }) 
+    axios
+      .post(
+        `${import.meta.env.VITE_API}/signin`,
+        { username, password },
+        { withCredentials: true }
+      )
       .then((response) => {
         console.log(response.data);
-        navigate('/'); // Redirect to the home page
-        window.location.reload(); 
+        navigate("/"); // Redirect to the home page
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
-        alert('Invalid credentials');
+        alert("Invalid credentials");
       });
   };
 
@@ -36,13 +41,27 @@ function SignIn() {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Username:</label>
-          <input type="text" placeholder='username' value={username} onChange={handleUsernameChange} required />
+          <input
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={handleUsernameChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label>Password:</label>
-          <input type="password" placeholder='password' value={password} onChange={handlePasswordChange} required />
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+          />
         </div>
-        <button className='signin-submit-button' type="submit">Sign In</button>
+        <button className="signin-submit-button" type="submit">
+          Sign In
+        </button>
       </form>
     </div>
   );

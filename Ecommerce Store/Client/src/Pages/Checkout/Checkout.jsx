@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './Checkout.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./Checkout.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Checkout = () => {
   const [checkoutItems, setCheckoutItems] = useState([]);
@@ -9,11 +9,14 @@ const Checkout = () => {
   useEffect(() => {
     const fetchCheckoutItems = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/checkout' , { withCredentials: true });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API}/checkout`,
+          { withCredentials: true }
+        );
         const consolidatedItems = consolidateItems(response.data);
         setCheckoutItems(consolidatedItems);
       } catch (error) {
-        console.error('Error fetching checkout data:', error);
+        console.error("Error fetching checkout data:", error);
       }
     };
     fetchCheckoutItems();
@@ -45,20 +48,24 @@ const Checkout = () => {
   const handleCompleteOrder = async () => {
     try {
       // Make the DELETE request to delete all items in the cart
-      await axios.delete('http://localhost:3000/checkout', { withCredentials: true });
-  
+      await axios.delete(`${import.meta.env.VITE_API}/checkout`, {
+        withCredentials: true,
+      });
+
       // Clear the checkout items after successful completion
       setCheckoutItems([]);
       window.location.reload();
     } catch (error) {
-      console.error('Error completing order:', error);
-      alert('An error occurred while completing the order. Please try again later.');
+      console.error("Error completing order:", error);
+      alert(
+        "An error occurred while completing the order. Please try again later."
+      );
     }
   };
 
   return (
     <>
-    <div className="checkout-title">Checkout</div>
+      <div className="checkout-title">Checkout</div>
       <div className="checkoutContainer">
         <h2>Order Summary</h2>
         {checkoutItems.length === 0 ? (
@@ -68,7 +75,11 @@ const Checkout = () => {
             {checkoutItems.map((item) => (
               <div key={item.title} className="checkoutItem">
                 <div className="itemImageContainer">
-                  <img src={item.image} alt={item.title} className="itemImage" />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="itemImage"
+                  />
                 </div>
                 <div className="itemDetails">
                   <div className="itemTitle">{item.title}</div>
@@ -84,11 +95,10 @@ const Checkout = () => {
           <strong>Total Price: ${calculateTotalPrice()}</strong>
         </div>
         <Link to="/confirmation">
-        <button className="completeOrderButton" onClick={handleCompleteOrder}>
-          Complete Order
-        </button>
+          <button className="completeOrderButton" onClick={handleCompleteOrder}>
+            Complete Order
+          </button>
         </Link>
-        
       </div>
 
       <div className="whiteSpaceDiv"></div>

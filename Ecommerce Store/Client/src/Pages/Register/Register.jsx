@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './Register.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
+  const [popupMessage, setPopupMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -29,15 +29,20 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/register', formData);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API}/register`,
+        formData
+      );
       console.log(response.data);
       alert("Registration successful!");
-      navigate('/signin');
+      navigate("/signin");
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 409) {
         setShowPopup(true);
-        setPopupMessage("Username is already taken. Please choose another username.");
+        setPopupMessage(
+          "Username is already taken. Please choose another username."
+        );
       } else {
         alert("Registration failed. Please try again later.");
       }
@@ -50,7 +55,7 @@ const RegistrationForm = () => {
     <div className="form-container">
       <h1>Create an Account</h1>
       <form onSubmit={handleSubmit}>
-        <div className={`form-group ${passwordMismatch ? 'error' : ''}`}>
+        <div className={`form-group ${passwordMismatch ? "error" : ""}`}>
           <label>Username:</label>
           <input
             type="text"
@@ -61,7 +66,7 @@ const RegistrationForm = () => {
             required
           />
         </div>
-        <div className={`form-group ${passwordMismatch ? 'error' : ''}`}>
+        <div className={`form-group ${passwordMismatch ? "error" : ""}`}>
           <label>Password:</label>
           <input
             type="password"
@@ -72,7 +77,7 @@ const RegistrationForm = () => {
             required
           />
         </div>
-        <div className={`form-group ${passwordMismatch ? 'error' : ''}`}>
+        <div className={`form-group ${passwordMismatch ? "error" : ""}`}>
           <label>Confirm Password:</label>
           <input
             type="password"
@@ -82,9 +87,13 @@ const RegistrationForm = () => {
             placeholder="password"
             required
           />
-          {passwordMismatch && <p className="error-message">Passwords do not match.</p>}
+          {passwordMismatch && (
+            <p className="error-message">Passwords do not match.</p>
+          )}
         </div>
-        <button className='register-submit-button' type="submit">Register</button>
+        <button className="register-submit-button" type="submit">
+          Register
+        </button>
       </form>
 
       {showPopup && (
