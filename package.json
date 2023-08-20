@@ -4,12 +4,12 @@
   "description": "",
   "main": "./Server/server.js",
   "scripts": {
-    "dir": " cd ./Ecommerce Store/Client",
-    "build:client": "cd ./Ecommerce Store/Client && npm run build",
-    "install:client": "cd ./Ecommerce Store/Client && npm install",
-    "install:server": "cd ./Ecommerce Store/Server && npm install",
+    "dir": " cd ./EcommerceStore/Client",
+    "build:client": "cd ./EcommerceStore/Client && npm run build",
+    "install:client": "cd ./EcommerceStore/Client && npm install",
+    "install:server": "cd ./EcommerceStore/Server && npm install",
     "build": "npm run install:client && npm run install:server && npm run build:client",
-    "start:production": "cd ./Ecommerce Store/Server && npm run start",
+    "start:production": "cd ./EcommerceStore/Server && npm run start",
     "run:production": "npm run build && npm run start:production"
   },
   "author": "",
