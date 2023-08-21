@@ -6,6 +6,7 @@ import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
 import { useParams } from 'react-router-dom';
 
+
 const Inventory = () => {
   const { category } = useParams(); // Get the category from the URL
   const [products, setProducts] = useState([]);
