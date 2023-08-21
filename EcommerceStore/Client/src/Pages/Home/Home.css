@@ -1,0 +1,27 @@
+.grid-center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 30px;
+  width: 100vw;
+  margin: 0 5vw; /* Adjusts the amount of white space on the left and right of the screen */
+}
+
+/* Media query for mobile screens */
+@media (max-width: 425px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    margin: 0;
+    padding: 0 10px; /* Adjusts the amount of white space on the left and right of the screen for mobile */
+  }
+}
+
+
+
+
+

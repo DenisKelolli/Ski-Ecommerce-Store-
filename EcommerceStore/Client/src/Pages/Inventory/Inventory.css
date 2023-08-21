@@ -1,0 +1,36 @@
+.skiContainer {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+}
+
+.skiMainGridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; 
+  margin-top: 20px;
+}
+
+
+@media (max-width: 1600px) {
+  .skiMainGridContainer {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+
+
+@media (max-width: 1400px) {
+  .skiMainGridContainer {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+
+@media (max-width: 950px) {
+  .skiContainer {
+    padding: 0 20px; /* Add 20px of whitespace to the left and right */
+  }
+  .skiMainGridContainer {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+}

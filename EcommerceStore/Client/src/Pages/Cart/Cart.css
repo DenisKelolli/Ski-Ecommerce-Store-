@@ -1,0 +1,140 @@
+.cartContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px;
+  align-items: center;
+}
+
+.cartProductImage {
+  width: 100%;
+  max-width: 300px;
+}
+
+.cartProductTitle {
+  font-size: 24px;
+  width: 300px;
+}
+
+.cartProductPrice {
+  font-size: 24px;
+  width: 80px;
+}
+
+.incrementButton,
+.decrementButton {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  outline: none;
+}
+
+.quantityField {
+  font-size: 18px;
+}
+
+.noItemsInCartMessage {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.checkoutButton {
+  background-color: rgb(24, 181, 24);
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkoutButton:hover {
+  background-color: green;
+}
+
+.cartContinueShoppingButton {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.cartDeleteButton {
+  background-color: rgb(225, 2, 2);
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cart-title {
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Mobile responsiveness for the cart component */
+@media (max-width: 768px) {
+  .cartContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 15px;
+    align-items: center;
+  }
+  
+
+  .cartProductTitle {
+    font-size: 24px;
+    width: 100vw;
+    text-align: left; /* Adjust alignment on smaller screens */
+  }
+
+  .cartProductPrice {
+    width: 100vw;
+    font-size: 24px;
+    text-align: left; /* Adjust alignment on smaller screens */
+  }
+
+  .incrementButton,
+  .decrementButton {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+
+  .quantityField {
+    font-size: 16px;
+  }
+
+  .noItemsInCartMessage {
+    font-size: 18px;
+  }
+
+  .checkoutButton,
+  .cartContinueShoppingButton,
+  .cartDeleteButton {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin: 15px;
+  }
+
+  .cartContainer {
+    flex-direction: row;
+  }
+}
