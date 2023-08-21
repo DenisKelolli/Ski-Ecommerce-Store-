@@ -3,7 +3,7 @@ import Sidebar from '../../Shared Components/Sidebar';
 import './Inventory.css';
 import ProductCard from '../../Shared Components/ProductCard';
 import axios from 'axios';
-import { CartContext } from '../../context/CartContext';
+import { CartContext } from '../../context/cartContext.jsx';
 import { useParams } from 'react-router-dom';
 
 
