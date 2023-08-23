@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Sidebar from '../../Shared Components/Sidebar';
 import './Inventory.css';
 import ProductCard from '../../Shared Components/ProductCard';
 import axios from 'axios';
@@ -62,15 +61,13 @@ const Inventory = () => {
   return (
     <>
       <div className="skiContainer">
-        <Sidebar onCategorySelect={handleCategorySelect} onSortSelect={handleSortSelect} />
         <div className="skiMainGridContainer">
           {filteredProducts.map((product) => {
-            const imageUrl = `http://localhost:3000/${product.image}`;
             return (
               <ProductCard
                 key={product._id} 
                 id={product._id}
-                image={imageUrl}
+                image={product.image}
                 title={product.title}
                 price={product.price}
                 onAddToCart={addToCart}

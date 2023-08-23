@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 require("dotenv").config();
 const port = 3000;
 const ProductModel = require("./models/product");
-const CartModel = require("./models/cart");
 const UserModel = require("./models/user");
 const MongoStore = require('connect-mongo');
 
@@ -46,7 +45,7 @@ app.get('/getuser', (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, '../Client/public')));
+// app.use(express.static(path.join(__dirname, '../Client/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -110,8 +109,11 @@ app.get("/cart", isAuthenticated, async (req, res) => {
 });
 
 app.post("/cart", isAuthenticated, async (req, res) => {
-  const { title, image, price, quantity } = req.body;
+  let { title, image, price, quantity } = req.body;
   const userId = req.user._id; // Get the MongoDB ObjectID for the authenticated user
+
+  // Remove the prefix from the image URL
+  image = image.replace("http://localhost:3000/", "");
 
   try {
     // Find the user in the UserModel
@@ -126,7 +128,7 @@ app.post("/cart", isAuthenticated, async (req, res) => {
       // If the item does not exist, create a new cart item and push it to the user's cart
       cartItem = {
         title,
-        image,
+        image, // Use the updated image URL
         price,
         quantity: quantity || 1,
       };
@@ -141,6 +143,7 @@ app.post("/cart", isAuthenticated, async (req, res) => {
     res.status(500).json({ error: "Error adding product to cart" });
   }
 });
+
 
 app.put("/cart/:id", isAuthenticated, async (req, res) => {
   const productId = req.params.id;
@@ -266,8 +269,6 @@ app.post("/logout", (req, res) => {
   });
 });
 
-
-
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
@@ -278,5 +279,6 @@ const start = async () => {
     console.log(e.message);
   }
 };
+
 
 start();
