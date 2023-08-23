@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite && open -a \"Google Chrome\" http://localhost:5173/",
+    "install": "cd ./EcommerceStore/Client && npm install",
     "build": "cd ./EcommerceStore/Client && npm run build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
